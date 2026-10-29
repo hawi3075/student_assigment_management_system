@@ -20,10 +20,7 @@ export const StudentDashboardPage: React.FC = () => {
         ]);
         setAssignments(assignRes.data.assignments || []);
         setSubmissions(subRes.data.submissions || []);
-        setGradesData({
-          stats: gradeRes.data.stats || null,
-          grades: gradeRes.data.grades || []
-        });
+        setGradesData({ stats: gradeRes.data.stats || null, grades: gradeRes.data.grades || [] });
       } catch (err) {
         console.error('Error loading student dashboard:', err);
       } finally {
@@ -35,225 +32,183 @@ export const StudentDashboardPage: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="d-flex justify-content-center align-items-center py-5">
-        <div className="spinner-border text-primary" role="status"></div>
+      <div className="page-loading">
+        <div className="spinner-ut"></div>
       </div>
     );
   }
 
   const totalAssignments = assignments.length;
   const submittedCount = submissions.length;
-  const gradedCount = gradesData.grades.length;
   const pendingCount = assignments.filter(a => !a.my_submission_status && !a.is_overdue).length;
-
   const upcomingDeadlines = assignments
     .filter(a => !a.my_submission_status && new Date(a.due_at).getTime() > Date.now())
     .slice(0, 4);
 
+  const stats = [
+    { label: 'Total Coursework', value: totalAssignments, icon: 'bi-journal-bookmark-fill', cls: 'si-blue', change: 'This semester' },
+    { label: 'Pending Action',   value: pendingCount,     icon: 'bi-clock-history',          cls: 'si-amber', change: 'Needs attention' },
+    { label: 'Submitted Work',   value: submittedCount,   icon: 'bi-file-earmark-check-fill', cls: 'si-sky',  change: 'Total uploads' },
+    {
+      label: 'Average Score',
+      value: gradesData.stats ? `${gradesData.stats.average_percentage}%` : '—',
+      icon: 'bi-trophy-fill',
+      cls: 'si-green',
+      change: gradesData.stats ? 'Across all graded' : 'No grades yet'
+    },
+  ];
+
   return (
     <div>
-      {/* Visual Campus Hero Banner */}
-      <div
-        className="card card-unitask mb-4 border-0 shadow-sm overflow-hidden text-white"
-        style={{
-          backgroundImage: `linear-gradient(90deg, rgba(15, 39, 68, 0.95) 0%, rgba(15, 39, 68, 0.85) 60%, rgba(15, 39, 68, 0.6) 100%), url('/src/assets/images/campus_hero.jpg')`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          minHeight: '190px'
-        }}
-      >
-        <div className="card-body p-4 p-md-5 d-flex flex-column justify-content-between">
-          <div className="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
-            <span className="badge bg-light text-dark fw-bold px-3 py-1">
-              <i className="bi bi-mortarboard-fill me-1 text-primary"></i> Academic Year 2026&ndash;2027 &bull; Fall Semester
-            </span>
-            <span className="badge bg-success bg-opacity-75 text-white px-3 py-1 border border-light border-opacity-25">
-              <i className="bi bi-check2-circle me-1"></i> Academic Standing: Good
-            </span>
-          </div>
-          <div>
-            <h2 className="fw-bold text-white mb-2">Welcome back, {user?.full_name}!</h2>
-            <p className="text-white-50 mb-3 small" style={{ maxWidth: '650px', lineHeight: '1.6' }}>
-              Track your coursework deadlines, upload validated submission attachments, and review detailed instructor evaluations.
-            </p>
-            <div className="d-flex flex-wrap gap-2">
-              <Link to="/student/assignments" className="btn btn-sm btn-light fw-bold text-dark d-inline-flex align-items-center gap-2">
-                <i className="bi bi-journal-check text-primary"></i> Browse Assignments
-              </Link>
-              <Link to="/student/grades" className="btn btn-sm btn-outline-light d-inline-flex align-items-center gap-2">
-                <i className="bi bi-trophy text-warning"></i> View My Grades
-              </Link>
-              <Link to="/student/profile" className="btn btn-sm btn-outline-light d-inline-flex align-items-center gap-2">
-                <i className="bi bi-person-circle"></i> Student Profile
-              </Link>
-            </div>
-          </div>
+      {/* ── Hero Banner ── */}
+      <div className="hero-banner fade-up" style={{ backgroundImage: "url('/src/assets/images/campus_hero.jpg')" }}>
+        <div className="hero-banner-img" style={{ backgroundImage: "url('/src/assets/images/campus_hero.jpg')" }}></div>
+
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '1.1rem' }}>
+          <span className="hero-chip">
+            <i className="bi bi-mortarboard-fill"></i> Academic Year 2026–2027 · Fall Semester
+          </span>
+          <span className="hero-chip hero-chip-success">
+            <i className="bi bi-check2-circle"></i> Good Academic Standing
+          </span>
+        </div>
+
+        <h1 className="hero-title">Welcome back, {user?.full_name?.split(' ')[0]}!</h1>
+        <p className="hero-subtitle">
+          Track your coursework deadlines, upload assignments, and review instructor feedback — all in one place.
+        </p>
+        <div className="hero-actions">
+          <Link to="/student/assignments" className="btn-hero-primary">
+            <i className="bi bi-journal-check"></i> Browse Assignments
+          </Link>
+          <Link to="/student/grades" className="btn-hero-outline">
+            <i className="bi bi-trophy"></i> View Grades
+          </Link>
+          <Link to="/student/profile" className="btn-hero-outline">
+            <i className="bi bi-person-circle"></i> My Profile
+          </Link>
         </div>
       </div>
 
-      {/* Metric Cards Grid */}
+      {/* ── Stat Cards ── */}
       <div className="row g-3 mb-4">
-        <div className="col-12 col-sm-6 col-lg-3">
-          <div className="stat-card">
-            <div className="d-flex justify-content-between align-items-center">
-              <div>
-                <div className="stat-label">Total Coursework</div>
-                <div className="stat-number">{totalAssignments}</div>
-              </div>
-              <div className="stat-icon bg-primary-subtle text-primary">
-                <i className="bi bi-journal-bookmark-fill"></i>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="col-12 col-sm-6 col-lg-3">
-          <div className="stat-card">
-            <div className="d-flex justify-content-between align-items-center">
-              <div>
-                <div className="stat-label">Pending Action</div>
-                <div className="stat-number text-warning">{pendingCount}</div>
-              </div>
-              <div className="stat-icon bg-warning-subtle text-warning">
-                <i className="bi bi-clock-history"></i>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="col-12 col-sm-6 col-lg-3">
-          <div className="stat-card">
-            <div className="d-flex justify-content-between align-items-center">
-              <div>
-                <div className="stat-label">Submitted Work</div>
-                <div className="stat-number text-info">{submittedCount}</div>
-              </div>
-              <div className="stat-icon bg-info-subtle text-info">
-                <i className="bi bi-file-earmark-check-fill"></i>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="col-12 col-sm-6 col-lg-3">
-          <div className="stat-card">
-            <div className="d-flex justify-content-between align-items-center">
-              <div>
-                <div className="stat-label">Average Score</div>
-                <div className="stat-number text-success">
-                  {gradesData.stats ? `${gradesData.stats.average_percentage}%` : 'N/A'}
+        {stats.map((s, i) => (
+          <div key={s.label} className={`col-12 col-sm-6 col-lg-3 fade-up fade-up-${i + 1}`}>
+            <div className="stat-card">
+              <div className="d-flex justify-content-between align-items-start">
+                <div>
+                  <div className="stat-label">{s.label}</div>
+                  <div className="stat-number">{s.value}</div>
+                  <div className="stat-change text-muted">
+                    <i className="bi bi-arrow-up-right" style={{ fontSize: '0.65rem' }}></i>
+                    {s.change}
+                  </div>
+                </div>
+                <div className={`stat-icon ${s.cls}`}>
+                  <i className={`bi ${s.icon}`}></i>
                 </div>
               </div>
-              <div className="stat-icon bg-success-subtle text-success">
-                <i className="bi bi-trophy-fill"></i>
-              </div>
             </div>
           </div>
-        </div>
+        ))}
       </div>
 
+      {/* ── Content Row ── */}
       <div className="row g-4">
+
         {/* Upcoming Deadlines */}
-        <div className="col-12 col-lg-7">
-          <div className="card card-unitask h-100">
-            <div className="card-header card-header-unitask d-flex justify-content-between align-items-center">
-              <span className="d-flex align-items-center gap-2">
-                <i className="bi bi-calendar-event text-primary"></i>
-                <span>Upcoming Assignment Deadlines</span>
-              </span>
-              <Link to="/student/assignments" className="small text-decoration-none fw-semibold">
-                View All
+        <div className="col-12 col-lg-7 fade-up fade-up-3">
+          <div className="card-ut h-100">
+            <div className="card-ut-header">
+              <div className="card-ut-title">
+                <i className="bi bi-calendar-event"></i>
+                Upcoming Deadlines
+              </div>
+              <Link to="/student/assignments" className="card-ut-link">
+                View All <i className="bi bi-arrow-right"></i>
               </Link>
             </div>
-            <div className="card-body p-0">
-              {upcomingDeadlines.length === 0 ? (
-                <div className="empty-state py-4">
-                  <i className="bi bi-calendar-check"></i>
-                  <p className="mb-0">No urgent pending assignments due soon. Great work!</p>
-                </div>
-              ) : (
-                <div className="list-group list-group-flush">
-                  {upcomingDeadlines.map(a => {
-                    const dueDate = new Date(a.due_at);
-                    const hoursLeft = Math.round((dueDate.getTime() - Date.now()) / (1000 * 3600));
-                    const isUrgent = hoursLeft < 48;
 
-                    return (
-                      <div key={a.id} className="list-group-item p-3 d-flex justify-content-between align-items-center">
-                        <div>
-                          <div className="d-flex align-items-center gap-2 mb-1">
-                            <span className="badge bg-light text-dark border fw-bold">{a.course_code}</span>
-                            <span className="badge bg-secondary-subtle text-secondary small">{a.max_marks} pts</span>
-                          </div>
-                          <Link to={`/student/assignments/${a.id}`} className="text-dark fw-bold text-decoration-none">
-                            {a.title}
-                          </Link>
-                          <div className="text-muted small mt-1">
-                            Instructor: {a.teacher_name}
-                          </div>
-                        </div>
-                        <div className="text-end">
-                          <span className={`badge ${isUrgent ? 'bg-danger text-white' : 'bg-warning-subtle text-warning border'} mb-2 d-inline-block`}>
-                            Due {dueDate.toLocaleDateString([], { month: 'short', day: 'numeric' })} at {dueDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                          </span>
-                          <div>
-                            <Link to={`/student/assignments/${a.id}/submit`} className="btn btn-sm btn-unitask-primary">
-                              Submit
-                            </Link>
-                          </div>
-                        </div>
+            {upcomingDeadlines.length === 0 ? (
+              <div className="empty-state">
+                <i className="bi bi-calendar-check"></i>
+                <h5>All caught up!</h5>
+                <p>No pending assignments due soon.</p>
+              </div>
+            ) : (
+              upcomingDeadlines.map(a => {
+                const dueDate = new Date(a.due_at);
+                const hoursLeft = Math.round((dueDate.getTime() - Date.now()) / 3600000);
+                const isUrgent = hoursLeft < 48;
+                return (
+                  <div key={a.id} className="list-item-ut">
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '4px' }}>
+                        <span className="badge-course">{a.course_code}</span>
+                        <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)', fontWeight: 600 }}>{a.max_marks} pts</span>
                       </div>
-                    );
-                  })}
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-
-        {/* Recent Grades and Teacher Feedback */}
-        <div className="col-12 col-lg-5">
-          <div className="card card-unitask h-100">
-            <div className="card-header card-header-unitask d-flex justify-content-between align-items-center">
-              <span className="d-flex align-items-center gap-2">
-                <i className="bi bi-award-fill text-warning"></i>
-                <span>Recent Academic Feedback</span>
-              </span>
-              <Link to="/student/grades" className="small text-decoration-none fw-semibold">
-                All Grades
-              </Link>
-            </div>
-            <div className="card-body p-3">
-              {gradesData.grades.length === 0 ? (
-                <div className="empty-state py-4">
-                  <i className="bi bi-chat-left-quote"></i>
-                  <p className="mb-0">No graded assignments published yet.</p>
-                </div>
-              ) : (
-                <div className="d-flex flex-column gap-3">
-                  {gradesData.grades.slice(0, 3).map(g => (
-                    <div key={g.grade_id} className="p-3 rounded border bg-light">
-                      <div className="d-flex justify-content-between align-items-center mb-1">
-                        <span className="badge bg-primary text-white">{g.course_code}</span>
-                        <span className="fw-bold text-success fs-6">
-                          {g.marks_obtained} / {g.max_marks} pts
-                        </span>
-                      </div>
-                      <div className="fw-semibold text-dark small mb-2">{g.assignment_title}</div>
-                      {g.feedback && (
-                        <div className="text-muted small fst-italic bg-white p-2 rounded border">
-                          "{g.feedback}"
-                        </div>
-                      )}
-                      <div className="text-muted small mt-2 d-flex justify-content-between">
-                        <span>Teacher: {g.teacher_name}</span>
-                        <span>{new Date(g.published_at).toLocaleDateString()}</span>
+                      <Link to={`/student/assignments/${a.id}`} style={{ fontWeight: 700, color: 'var(--primary)', textDecoration: 'none', fontSize: '0.9rem', display: 'block' }}>
+                        {a.title}
+                      </Link>
+                      <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)', marginTop: '2px' }}>
+                        <i className="bi bi-person me-1"></i>{a.teacher_name}
                       </div>
                     </div>
-                  ))}
-                </div>
-              )}
+                    <div style={{ textAlign: 'right', flexShrink: 0 }}>
+                      <div className={isUrgent ? 'badge-urgent' : 'badge-due'} style={{ marginBottom: '8px', display: 'inline-block' }}>
+                        <i className={`bi ${isUrgent ? 'bi-exclamation-circle' : 'bi-clock'} me-1`}></i>
+                        {dueDate.toLocaleDateString([], { month: 'short', day: 'numeric' })}
+                      </div>
+                      <div>
+                        <Link to={`/student/assignments/${a.id}/submit`} className="btn-ut-primary" style={{ padding: '0.35rem 0.85rem', fontSize: '0.8rem' }}>
+                          <i className="bi bi-upload"></i> Submit
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })
+            )}
+          </div>
+        </div>
+
+        {/* Recent Grades */}
+        <div className="col-12 col-lg-5 fade-up fade-up-4">
+          <div className="card-ut h-100">
+            <div className="card-ut-header">
+              <div className="card-ut-title">
+                <i className="bi bi-award-fill" style={{ color: '#d97706' }}></i>
+                Recent Feedback
+              </div>
+              <Link to="/student/grades" className="card-ut-link">
+                All Grades <i className="bi bi-arrow-right"></i>
+              </Link>
             </div>
+
+            {gradesData.grades.length === 0 ? (
+              <div className="empty-state">
+                <i className="bi bi-chat-left-quote"></i>
+                <h5>No grades yet</h5>
+                <p>Grades will appear here once published by your instructor.</p>
+              </div>
+            ) : (
+              <div style={{ padding: '0.75rem', display: 'flex', flexDirection: 'column', gap: '0.65rem' }}>
+                {gradesData.grades.slice(0, 3).map(g => (
+                  <div key={g.grade_id} className="grade-item">
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4px' }}>
+                      <span className="badge-course">{g.course_code}</span>
+                      <span className="grade-score">{g.marks_obtained} / {g.max_marks} pts</span>
+                    </div>
+                    <div style={{ fontWeight: 700, fontSize: '0.86rem', color: 'var(--primary)', marginBottom: '4px' }}>{g.assignment_title}</div>
+                    {g.feedback && <div className="grade-feedback">"{g.feedback}"</div>}
+                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: '6px' }}>
+                      <span><i className="bi bi-person me-1"></i>{g.teacher_name}</span>
+                      <span>{new Date(g.published_at).toLocaleDateString()}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </div>
