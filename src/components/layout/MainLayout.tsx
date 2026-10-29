@@ -10,13 +10,29 @@ export const MainLayout: React.FC = () => {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
   return (
-    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', background: '#f5f7fb' }}>
+    /*
+     * Root: full viewport height, no overflow — this is key.
+     * Everything is contained inside, so the browser never scrolls
+     * the whole page; only <main> scrolls independently.
+     */
+    <div
+      style={{
+        height: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
+        overflow: 'hidden',
+        background: '#f5f7fb',
+      }}
+    >
+      {/* ── Navbar: fixed height, never scrolls away ── */}
+      <div style={{ flexShrink: 0 }}>
+        <Navbar onToggleSidebar={() => setSidebarOpen(prev => !prev)} />
+      </div>
 
-      {/* Sticky navbar at top */}
-      <Navbar onToggleSidebar={() => setSidebarOpen(prev => !prev)} />
+      {/* ── Body row: fills remaining height, no overflow ── */}
+      <div style={{ display: 'flex', flex: 1, overflow: 'hidden' }}>
 
-      {/* Body: sidebar + content side by side */}
-      <div style={{ display: 'flex', flex: 1, alignItems: 'flex-start' }}>
+        {/* Sidebar: fixed height = remaining viewport, internal scroll only */}
         {user && (
           <Sidebar
             isOpen={sidebarOpen}
@@ -26,29 +42,33 @@ export const MainLayout: React.FC = () => {
           />
         )}
 
-        <main
-          className="unitask-main flex-grow-1"
+        {/* Main content: this is the ONLY thing that scrolls */}
+        <div
           style={{
-            padding: '1.75rem',
+            flex: 1,
+            overflowY: 'auto',
+            display: 'flex',
+            flexDirection: 'column',
             minWidth: 0,
-            transition: 'padding 0.28s ease',
           }}
         >
-          <Outlet />
-        </main>
-      </div>
+          <main style={{ flex: 1, padding: '1.75rem' }}>
+            <Outlet />
+          </main>
 
-      <footer className="py-3 px-4 bg-white border-top text-center text-muted small">
-        <div className="container-fluid d-flex flex-column flex-md-row justify-content-between align-items-center gap-2">
-          <div>
-            &copy; {new Date().getFullYear()} <strong>UniTask</strong> &mdash; University Student Assignment Management System.
-          </div>
-          <div className="d-flex gap-3">
-            <span className="badge bg-light text-secondary border">Academic Session 2026–2027</span>
-            <span className="badge bg-light text-secondary border">Institutional Security Enforced</span>
-          </div>
+          <footer className="py-3 px-4 bg-white border-top text-muted small">
+            <div className="container-fluid d-flex flex-column flex-md-row justify-content-between align-items-center gap-2">
+              <div>
+                &copy; {new Date().getFullYear()} <strong>UniTask</strong> &mdash; University Student Assignment Management System.
+              </div>
+              <div className="d-flex gap-3">
+                <span className="badge bg-light text-secondary border">Academic Session 2026–2027</span>
+                <span className="badge bg-light text-secondary border">Institutional Security Enforced</span>
+              </div>
+            </div>
+          </footer>
         </div>
-      </footer>
+      </div>
     </div>
   );
 };

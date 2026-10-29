@@ -117,19 +117,16 @@ export const Sidebar: React.FC<SidebarProps> = ({
         /* ── Sidebar shell ── */
         .ut-sidebar {
           width: ${sidebarWidth};
-          min-height: calc(100vh - 62px);
+          /* Height fills the flex parent which is already 100vh - navbar */
+          height: 100%;
           background: ${theme.gradient};
           border-right: 1px solid rgba(255,255,255,0.06);
           display: flex;
           flex-direction: column;
           transition: width 0.28s cubic-bezier(0.4,0,0.2,1);
-          overflow: hidden;
           flex-shrink: 0;
-          /* sticky */
-          position: sticky;
-          top: 62px;
-          height: calc(100vh - 62px);
           overflow-y: auto;
+          overflow-x: hidden;
           scrollbar-width: thin;
           scrollbar-color: rgba(255,255,255,0.1) transparent;
         }
@@ -281,7 +278,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
         /* ── Bottom glow decoration ── */
         .ut-bottom-glow {
-          position: fixed;
+          position: absolute;
           bottom: 80px; left: ${collapsed ? '16px' : '60px'};
           width: ${collapsed ? '40px' : '140px'};
           height: 120px;
@@ -315,8 +312,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
         @keyframes slideIn { from { transform: translateX(-100%) } to { transform: translateX(0) } }
       `}</style>
 
-      {/* ── DESKTOP sidebar (sticky) ── */}
-      <div className="ut-sidebar d-none d-lg-flex">
+      {/* ── DESKTOP sidebar ── */}
+      <div className="ut-sidebar d-none d-lg-flex" style={{ position: 'relative' }}>
         <SidebarContent
           user={user}
           theme={theme}
