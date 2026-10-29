@@ -9,39 +9,20 @@ interface SidebarProps {
   onToggleCollapse?: () => void;
 }
 
+// Single unified navy theme — matches the navbar exactly
+const NAVY = {
+  gradient: 'linear-gradient(160deg,#080f1e 0%,#0a1628 45%,#0d213a 100%)',
+  accent: '#2563eb', accentRgb: '37,99,235',
+  accentLight: 'rgba(37,99,235,0.14)', accentBorder: 'rgba(37,99,235,0.35)',
+  sectionColor: 'rgba(148,163,184,0.55)',
+  badgeBg: 'rgba(37,99,235,0.18)', badgeColor: '#93c5fd',
+};
+
 const ROLE_THEME = {
-  super_admin: {
-    gradient: 'linear-gradient(160deg,#1a0a2e 0%,#16052a 40%,#0d0320 100%)',
-    accent: '#a855f7', accentRgb: '168,85,247',
-    accentLight: 'rgba(168,85,247,0.15)', accentBorder: 'rgba(168,85,247,0.35)',
-    sectionColor: 'rgba(168,85,247,0.6)',
-    label: 'Super Administration', icon: 'bi-shield-fill-exclamation',
-    badgeBg: 'rgba(168,85,247,0.18)', badgeColor: '#d8b4fe',
-  },
-  admin: {
-    gradient: 'linear-gradient(160deg,#0f0c29 0%,#0d1547 40%,#0a1628 100%)',
-    accent: '#6366f1', accentRgb: '99,102,241',
-    accentLight: 'rgba(99,102,241,0.15)', accentBorder: 'rgba(99,102,241,0.35)',
-    sectionColor: 'rgba(99,102,241,0.6)',
-    label: 'System Administration', icon: 'bi-shield-fill-check',
-    badgeBg: 'rgba(99,102,241,0.18)', badgeColor: '#a5b4fc',
-  },
-  teacher: {
-    gradient: 'linear-gradient(160deg,#071e2e 0%,#0c2a42 40%,#0a1e33 100%)',
-    accent: '#0ea5e9', accentRgb: '14,165,233',
-    accentLight: 'rgba(14,165,233,0.15)', accentBorder: 'rgba(14,165,233,0.35)',
-    sectionColor: 'rgba(14,165,233,0.6)',
-    label: 'Faculty Portal', icon: 'bi-person-workspace',
-    badgeBg: 'rgba(14,165,233,0.18)', badgeColor: '#7dd3fc',
-  },
-  student: {
-    gradient: 'linear-gradient(160deg,#051a14 0%,#0a2a1e 40%,#061810 100%)',
-    accent: '#10b981', accentRgb: '16,185,129',
-    accentLight: 'rgba(16,185,129,0.15)', accentBorder: 'rgba(16,185,129,0.35)',
-    sectionColor: 'rgba(16,185,129,0.6)',
-    label: 'Academic Portal', icon: 'bi-mortarboard-fill',
-    badgeBg: 'rgba(16,185,129,0.18)', badgeColor: '#6ee7b7',
-  },
+  super_admin: { ...NAVY, label: 'Super Administration', icon: 'bi-shield-fill-exclamation' },
+  admin:       { ...NAVY, label: 'System Administration', icon: 'bi-shield-fill-check' },
+  teacher:     { ...NAVY, label: 'Faculty Portal',        icon: 'bi-person-workspace' },
+  student:     { ...NAVY, label: 'Academic Portal',       icon: 'bi-mortarboard-fill' },
 };
 
 const NAV_ITEMS: Record<string, { to: string; icon: string; label: string; end?: boolean }[]> = {
@@ -133,7 +114,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
     .ut-dot {
       position:absolute; bottom:-2px; right:-2px;
       width:9px; height:9px; border-radius:50%;
-      background:#10b981; border:2px solid #0a1a10;
+      background:#10b981; border:2px solid #0a1628;
     }
     .ut-uname {
       font-size:0.86rem; font-weight:700; color:#f1f5f9;

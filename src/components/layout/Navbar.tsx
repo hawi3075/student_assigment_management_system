@@ -6,34 +6,31 @@ interface NavbarProps {
   onToggleSidebar?: () => void;
 }
 
+// Unified navy color system — all roles share the same brand palette
 const ROLE_CONFIG = {
   super_admin: {
     label: 'Super Admin',
-    badgeClass: 'role-badge-superadmin',
-    avatarClass: 'avatar-superadmin',
+    badgeClass: 'role-badge-navy',
+    avatarClass: 'avatar-navy',
     icon: 'bi-shield-fill-exclamation',
-    accentColor: '#ef4444',
   },
   admin: {
     label: 'Administrator',
-    badgeClass: 'role-badge-admin',
-    avatarClass: 'avatar-admin',
+    badgeClass: 'role-badge-navy',
+    avatarClass: 'avatar-navy',
     icon: 'bi-shield-fill-check',
-    accentColor: '#6366f1',
   },
   teacher: {
     label: 'Faculty',
-    badgeClass: 'role-badge-teacher',
-    avatarClass: 'avatar-teacher',
+    badgeClass: 'role-badge-navy',
+    avatarClass: 'avatar-navy',
     icon: 'bi-person-workspace',
-    accentColor: '#0ea5e9',
   },
   student: {
     label: 'Student',
-    badgeClass: 'role-badge-student',
-    avatarClass: 'avatar-student',
+    badgeClass: 'role-badge-navy',
+    avatarClass: 'avatar-navy',
     icon: 'bi-mortarboard-fill',
-    accentColor: '#10b981',
   },
 };
 
@@ -181,10 +178,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onToggleSidebar }) => {
           transition: border-color 0.2s ease, transform 0.2s ease;
           flex-shrink: 0;
         }
-        .avatar-superadmin { background: linear-gradient(135deg,#ef4444,#b91c1c); color:#fff; }
-        .avatar-admin      { background: linear-gradient(135deg,#6366f1,#4338ca); color:#fff; }
-        .avatar-teacher    { background: linear-gradient(135deg,#0ea5e9,#0369a1); color:#fff; }
-        .avatar-student    { background: linear-gradient(135deg,#10b981,#047857); color:#fff; }
+        .avatar-navy { background: linear-gradient(135deg,#1e40af,#1d4ed8); color:#fff; }
 
         /* User dropdown trigger */
         .user-trigger {
@@ -199,11 +193,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onToggleSidebar }) => {
         .user-name-text { font-size: 0.85rem; font-weight: 600; color: #e2e8f0; line-height: 1.2; }
         .user-role-text { font-size: 0.65rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
 
-        /* Role badge colors */
-        .role-badge-superadmin { color: #fca5a5; }
-        .role-badge-admin      { color: #a5b4fc; }
-        .role-badge-teacher    { color: #7dd3fc; }
-        .role-badge-student    { color: #6ee7b7; }
+        /* Role badge — unified navy/blue */
+        .role-badge-navy { color: #93c5fd; }
 
         /* Dropdown */
         .navbar-dropdown {
