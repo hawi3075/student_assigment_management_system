@@ -1,0 +1,20 @@
+{
+  "name": "unitask",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev:backend": "cd backend && tsx server.ts",
+    "dev:frontend": "cd frontend && vite",
+    "build:frontend": "cd frontend && vite build",
+    "test": "cd backend && tsx tests/backend.test.ts",
+    "install:all": "cd backend && npm install && cd ../frontend && npm install"
+  },
+  "workspaces": [
+    "backend",
+    "frontend"
+  ],
+  "dependencies": {
+    "vite": "^8.3.5"
+  }
+}

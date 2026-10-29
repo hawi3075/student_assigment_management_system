@@ -1,0 +1,6 @@
+{
+  "name": "UniTask - Student Assignment Management System",
+  "description": "Full-stack university assignment management system for students, teachers, and administrators with Neon PostgreSQL integration, assignment submission, grading, and role-based access control.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
