@@ -7,18 +7,37 @@ import { useAuth } from '../../context/AuthContext.js';
 export const MainLayout: React.FC = () => {
   const { user } = useAuth();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
   return (
-    <div className="min-vh-100 d-flex flex-column bg-light">
+    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', background: '#f5f7fb' }}>
+
+      {/* Sticky navbar at top */}
       <Navbar onToggleSidebar={() => setSidebarOpen(prev => !prev)} />
-      <div className="d-flex flex-grow-1">
+
+      {/* Body: sidebar + content side by side */}
+      <div style={{ display: 'flex', flex: 1, alignItems: 'flex-start' }}>
         {user && (
-          <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+          <Sidebar
+            isOpen={sidebarOpen}
+            onClose={() => setSidebarOpen(false)}
+            collapsed={sidebarCollapsed}
+            onToggleCollapse={() => setSidebarCollapsed(prev => !prev)}
+          />
         )}
-        <main className="unitask-main flex-grow-1">
+
+        <main
+          className="unitask-main flex-grow-1"
+          style={{
+            padding: '1.75rem',
+            minWidth: 0,
+            transition: 'padding 0.28s ease',
+          }}
+        >
           <Outlet />
         </main>
       </div>
+
       <footer className="py-3 px-4 bg-white border-top text-center text-muted small">
         <div className="container-fluid d-flex flex-column flex-md-row justify-content-between align-items-center gap-2">
           <div>
