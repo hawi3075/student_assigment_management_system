@@ -175,9 +175,11 @@ export const StudentAssignmentListPage: React.FC = () => {
                           <Link to={`/student/assignments/${a.id}`} className="btn btn-sm btn-unitask-outline">
                             Details
                           </Link>
-                          <Link to={`/student/assignments/${a.id}/submit`} className="btn btn-sm btn-unitask-primary">
-                            {a.my_submission_status ? 'Update' : 'Submit'}
-                          </Link>
+                          {a.my_submission_status !== 'graded' && (
+                            <Link to={`/student/assignments/${a.id}/submit`} className="btn btn-sm btn-unitask-primary">
+                              {a.my_submission_status ? 'Update' : 'Submit'}
+                            </Link>
+                          )}
                         </div>
                       </div>
                     </div>
