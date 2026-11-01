@@ -73,7 +73,10 @@ async function startServer() {
     });
     app.use(vite.middlewares);
   } else {
-    const distPath = path.resolve(__dirname, 'dist');
+    // Try frontend/dist first (separated build), then root dist as fallback
+    const distPath = fs.existsSync(path.resolve(__dirname, 'frontend/dist'))
+      ? path.resolve(__dirname, 'frontend/dist')
+      : path.resolve(__dirname, 'dist');
     app.use(express.static(distPath));
     app.get('*', (_req, res) => {
       res.sendFile(path.resolve(distPath, 'index.html'));
