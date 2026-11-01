@@ -380,9 +380,11 @@ body {
 }
 .btn-ut-ghost:hover { background: #f1f5f9; color: var(--primary); }
 
-/* Keep backward compat aliases */
-.btn-unitask-primary { @extend .btn-ut-primary; }
-.btn-unitask-outline { @extend .btn-ut-outline; }
+/* keep old class names working — explicit copies (no @extend in plain CSS) */
+.btn-unitask-primary { background:linear-gradient(135deg,#1e3a8a,#2563eb); border:none; color:#fff; padding:0.5rem 1.1rem; border-radius:var(--radius-sm); font-weight:600; font-size:0.865rem; display:inline-flex; align-items:center; gap:6px; text-decoration:none; cursor:pointer; transition:all var(--transition); box-shadow:0 2px 8px rgba(37,99,235,0.35); }
+.btn-unitask-primary:hover { background:linear-gradient(135deg,#1e40af,#1d4ed8); color:#fff; transform:translateY(-1px); box-shadow:0 4px 16px rgba(37,99,235,0.45); }
+.btn-unitask-outline { background:var(--surface); border:1.5px solid var(--border); color:var(--text); padding:0.48rem 1rem; border-radius:var(--radius-sm); font-weight:600; font-size:0.865rem; display:inline-flex; align-items:center; gap:6px; text-decoration:none; cursor:pointer; transition:all var(--transition); }
+.btn-unitask-outline:hover { border-color:var(--accent); color:var(--accent); background:#eff6ff; }
 
 /* ════════════════════════════════════════
    TABLES
@@ -606,9 +608,9 @@ body {
 .bg-surface { background: var(--surface) !important; }
 
 /* keep old class names working */
-.card-unitask       { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow-sm); }
-.card-header-unitask{ background:var(--surface); border-bottom:1px solid var(--border); font-weight:700; color:var(--primary); padding:1rem 1.25rem; }
-.btn-unitask-primary{ background:linear-gradient(135deg,#1e3a8a,#2563eb); border:none; color:#fff; padding:0.5rem 1.1rem; border-radius:var(--radius-sm); font-weight:600; font-size:0.865rem; display:inline-flex; align-items:center; gap:6px; text-decoration:none; transition:all var(--transition); box-shadow:0 2px 8px rgba(37,99,235,0.35); }
-.btn-unitask-primary:hover{ background:linear-gradient(135deg,#1e40af,#1d4ed8); color:#fff; transform:translateY(-1px); box-shadow:0 4px 16px rgba(37,99,235,0.45); }
-.btn-unitask-outline{ background:var(--surface); border:1.5px solid var(--border); color:var(--text); padding:0.48rem 1rem; border-radius:var(--radius-sm); font-weight:600; font-size:0.865rem; display:inline-flex; align-items:center; gap:6px; text-decoration:none; transition:all var(--transition); }
-.btn-unitask-outline:hover{ border-color:var(--accent); color:var(--accent); background:#eff6ff; }
+.card-unitask        { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow-sm); }
+.card-header-unitask { background:var(--surface); border-bottom:1px solid var(--border); font-weight:700; color:var(--primary); padding:1rem 1.25rem; }
+.btn-unitask-primary { background:linear-gradient(135deg,#1e3a8a,#2563eb); border:none; color:#fff; padding:0.5rem 1.1rem; border-radius:var(--radius-sm); font-weight:600; font-size:0.865rem; display:inline-flex; align-items:center; gap:6px; text-decoration:none; transition:all var(--transition); box-shadow:0 2px 8px rgba(37,99,235,0.35); }
+.btn-unitask-primary:hover { background:linear-gradient(135deg,#1e40af,#1d4ed8); color:#fff; transform:translateY(-1px); box-shadow:0 4px 16px rgba(37,99,235,0.45); }
+.btn-unitask-outline { background:var(--surface); border:1.5px solid var(--border); color:var(--text); padding:0.48rem 1rem; border-radius:var(--radius-sm); font-weight:600; font-size:0.865rem; display:inline-flex; align-items:center; gap:6px; text-decoration:none; transition:all var(--transition); }
+.btn-unitask-outline:hover { border-color:var(--accent); color:var(--accent); background:#eff6ff; }
