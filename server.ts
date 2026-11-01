@@ -74,13 +74,29 @@ async function startServer() {
     });
     app.use(vite.middlewares);
   } else {
-    // Try frontend/dist first (separated build), then root dist as fallback
-    const distPath = fs.existsSync(path.resolve(__dirname, 'frontend/dist'))
-      ? path.resolve(__dirname, 'frontend/dist')
-      : path.resolve(__dirname, 'dist');
+    // In production the compiled server.js lives in dist-server/
+    // so __dirname = <root>/dist-server — walk up one level to find frontend/dist
+    const serverDir = __dirname;
+    const rootDir = path.resolve(serverDir, '..');
+
+    const candidates = [
+      path.resolve(rootDir, 'frontend/dist'),   // normal build output
+      path.resolve(rootDir, 'dist'),             // fallback
+      path.resolve(serverDir, '../frontend/dist'),
+    ];
+
+    const distPath = candidates.find(p => fs.existsSync(path.join(p, 'index.html')))
+      ?? candidates[0];
+
+    console.log(`[Static] Serving from: ${distPath}`);
     app.use(express.static(distPath));
-    app.get('*', (_req, res) => {
-      res.sendFile(path.resolve(distPath, 'index.html'));
+    app.get('*splat', (_req, res) => {
+      const indexFile = path.resolve(distPath, 'index.html');
+      if (fs.existsSync(indexFile)) {
+        res.sendFile(indexFile);
+      } else {
+        res.status(404).send(`index.html not found. Checked: ${distPath}`);
+      }
     });
   }
 
