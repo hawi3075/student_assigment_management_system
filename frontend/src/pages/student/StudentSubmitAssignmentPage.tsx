@@ -148,7 +148,7 @@ export const StudentSubmitAssignmentPage: React.FC = () => {
           )}
 
           <form onSubmit={handleSubmit}>
-            {/* File Upload Field */}
+            
             <div className="mb-4">
               <label className="form-label fw-bold">Assignment File Upload</label>
               <div className="border border-2 border-dashed rounded p-4 text-center bg-light">
