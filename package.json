@@ -10,7 +10,7 @@
     "dev": "tsx server.ts",
     "build": "npm run build:frontend && npm run build:server",
     "build:frontend": "npx vite build --config vite.config.ts",
-    "build:server": "npx esbuild server.ts --bundle --platform=node --format=esm --outfile=dist-server/server.js --external:vite --external:@neon/config --external:@neon/env",
+    "build:server": "npx esbuild server.ts src/backend/**/*.ts --platform=node --format=esm --packages=external --outdir=dist-server --out-extension:.js=.js",
     "start": "NODE_ENV=production node dist-server/server.js",
     "test": "tsx tests/backend.test.ts"
   },
