@@ -3,25 +3,40 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "engines": {
+    "node": ">=18"
+  },
   "scripts": {
     "dev": "tsx server.ts",
-    "build": "cd frontend && npm install && npx vite build",
-    "start": "NODE_ENV=production tsx server.ts",
+    "build": "npm run build:frontend && npm run build:server",
+    "build:frontend": "npx vite build --config vite.config.ts",
+    "build:server": "npx esbuild server.ts --bundle --platform=node --format=esm --outfile=dist-server/server.js --external:vite --external:@neon/config --external:@neon/env",
+    "start": "NODE_ENV=production node dist-server/server.js",
     "test": "tsx tests/backend.test.ts"
   },
   "dependencies": {
+    "@google/genai": "^2.4.0",
     "@neon/config": "^1.9.5",
     "@neon/env": "^1.6.6",
+    "@tailwindcss/vite": "^4.3.3",
+    "@vitejs/plugin-react": "^6.1.1",
+    "axios": "^1.21.0",
     "bcryptjs": "^3.0.3",
+    "bootstrap": "^5.3.8",
+    "bootstrap-icons": "^1.13.2",
     "cors": "^2.8.6",
     "dotenv": "^17.2.3",
     "express": "^4.21.2",
     "helmet": "^8.3.0",
     "jsonwebtoken": "^9.0.3",
+    "lucide-react": "^0.546.0",
+    "motion": "^12.23.24",
     "multer": "^2.5.0",
     "pg": "^8.23.1",
-    "vite": "^8.3.0",
-    "@vitejs/plugin-react": "^6.1.1"
+    "react": "^19.0.1",
+    "react-dom": "^19.0.1",
+    "react-router-dom": "^7.18.5",
+    "vite": "^8.3.0"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",
@@ -33,6 +48,9 @@
     "@types/pg": "^8.23.1",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
+    "autoprefixer": "^10.4.21",
+    "esbuild": "^0.25.0",
+    "tailwindcss": "^4.3.3",
     "tsx": "^4.21.0",
     "typescript": "^7.0.2"
   }
