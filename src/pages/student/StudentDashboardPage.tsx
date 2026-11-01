@@ -61,8 +61,8 @@ export const StudentDashboardPage: React.FC = () => {
   return (
     <div>
       {/* ── Hero Banner ── */}
-      <div className="hero-banner fade-up" style={{ backgroundImage: "url('/src/assets/images/campus_hero.jpg')" }}>
-        <div className="hero-banner-img" style={{ backgroundImage: "url('/src/assets/images/campus_hero.jpg')" }}></div>
+      <div className="hero-banner fade-up" style={{ backgroundImage: "url('/images/campus_hero.jpg')" }}>
+        <div className="hero-banner-img" style={{ backgroundImage: "url('/images/campus_hero.jpg')" }}></div>
 
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '1.1rem' }}>
           <span className="hero-chip">

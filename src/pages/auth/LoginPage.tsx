@@ -48,7 +48,7 @@ export const LoginPage: React.FC = () => {
           flex: '0 0 46%', padding: '2.5rem 2rem',
           display: 'none',
           flexDirection: 'column', justifyContent: 'space-between',
-          backgroundImage: 'linear-gradient(170deg,rgba(8,15,30,0.92) 0%,rgba(10,22,40,0.96) 100%), url(/src/assets/images/campus_hero.jpg)',
+          backgroundImage: 'linear-gradient(170deg,rgba(8,15,30,0.92) 0%,rgba(10,22,40,0.96) 100%), url(/images/campus_hero.jpg)',
           backgroundSize: 'cover', backgroundPosition: 'center',
           color: '#fff',
         }} className="d-none d-lg-flex">

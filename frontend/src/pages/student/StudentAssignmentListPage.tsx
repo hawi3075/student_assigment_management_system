@@ -111,10 +111,10 @@ export const StudentAssignmentListPage: React.FC = () => {
 
             // Choose image asset based on course
             const courseCover = a.course_code?.includes('202')
-              ? '/src/assets/images/course_algorithms.jpg'
+              ? '/images/course_algorithms.jpg'
               : a.course_code?.includes('301')
-              ? '/src/assets/images/course_database.jpg'
-              : '/src/assets/images/campus_hero.jpg';
+              ? '/images/course_database.jpg'
+              : '/images/campus_hero.jpg';
 
             return (
               <div key={a.id} className="card card-unitask p-0 overflow-hidden shadow-sm">

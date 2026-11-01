@@ -105,10 +105,10 @@ export const TeacherCoursesPage: React.FC = () => {
         <div className="row g-4">
           {courses.map(course => {
             const courseCover = course.course_code?.includes('202')
-              ? '/src/assets/images/course_algorithms.jpg'
+              ? '/images/course_algorithms.jpg'
               : course.course_code?.includes('301')
-              ? '/src/assets/images/course_database.jpg'
-              : '/src/assets/images/campus_hero.jpg';
+              ? '/images/course_database.jpg'
+              : '/images/campus_hero.jpg';
 
             return (
               <div key={course.id} className="col-12 col-md-6 col-lg-4">
