@@ -86,7 +86,7 @@ async function startServer() {
 
     console.log(`[Static] Serving from: ${distPath}`);
     app.use(express.static(distPath));
-    app.get('*splat', (_req, res) => {
+    app.get('*', (_req, res) => {
       const indexFile = path.resolve(distPath, 'index.html');
       if (fs.existsSync(indexFile)) {
         res.sendFile(indexFile);
