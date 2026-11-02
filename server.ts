@@ -16,7 +16,7 @@ import adminRoutes from './src/backend/routes/adminRoutes.js';
 import { getSystemHealth } from './src/backend/controllers/adminController.js';
 import { openApiSpec } from './src/backend/swagger.js';
 
-dotenv.config();
+dotenv.config({ override: false }); // never override vars already set by the host (Render, etc.)
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);

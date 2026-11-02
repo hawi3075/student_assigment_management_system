@@ -8,8 +8,6 @@ services:
       - key: NODE_ENV
         value: production
       - key: DATABASE_URL
-        sync: false
+        sync: false   # Set this in Render dashboard → Environment
       - key: JWT_SECRET
-        sync: false
-      - key: PORT
-        value: 10000
+        sync: false   # Set this in Render dashboard → Environment
