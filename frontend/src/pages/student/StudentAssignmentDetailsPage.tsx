@@ -101,7 +101,7 @@ export const StudentAssignmentDetailsPage: React.FC = () => {
               </>
             )}
 
-            {/* Reference Files */}
+            
             <h5 className="fw-bold text-dark mb-2">Reference Documents & Attachments</h5>
             {attachments && attachments.length > 0 ? (
               <div className="list-group">

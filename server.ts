@@ -20,6 +20,8 @@ dotenv.config();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+// projectRoot = the repo root regardless of where server.ts lives
+const projectRoot = path.resolve(__dirname);
 
 async function startServer() {
   const app = express();
@@ -74,15 +76,9 @@ async function startServer() {
     });
     app.use(vite.middlewares);
   } else {
-    // In production the compiled server.js lives in dist-server/
-    // so __dirname = <root>/dist-server — walk up one level to find frontend/dist
-    const serverDir = __dirname;
-    const rootDir = path.resolve(serverDir, '..');
-
     const candidates = [
-      path.resolve(rootDir, 'frontend/dist'),   // normal build output
-      path.resolve(rootDir, 'dist'),             // fallback
-      path.resolve(serverDir, '../frontend/dist'),
+      path.resolve(projectRoot, 'frontend/dist'),
+      path.resolve(projectRoot, 'dist'),
     ];
 
     const distPath = candidates.find(p => fs.existsSync(path.join(p, 'index.html')))
